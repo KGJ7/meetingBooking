@@ -47,9 +47,6 @@ public class LoginController implements Initializable {
     public void login() {
         try {
             if (this.loginModel.isLogin(this.usernameField.getText(), this.passwordField.getText(), accountType.getValue())) {
-                System.out.println("works");
-                Stage stage = (Stage) this.loginButton.getScene().getWindow();
-                stage.close();
                 switch (accountType.getValue()) {
                     case "Admin":
                         adminLogin();
@@ -67,6 +64,7 @@ public class LoginController implements Initializable {
 
     public void adminLogin(){
         try{
+            Stage old = (Stage) this.loginButton.getScene().getWindow();
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("/Admin/Admin.fxml").openStream());
@@ -75,6 +73,7 @@ public class LoginController implements Initializable {
             stage.setScene(scene);
             stage.setTitle("Admin Dashboard");
             stage.setResizable(false);
+            old.close();
             stage.show();
         } catch (IOException e){
             e.printStackTrace();
@@ -82,6 +81,7 @@ public class LoginController implements Initializable {
     }
     public void customerLogin(){
         try{
+            Stage old = (Stage) this.loginButton.getScene().getWindow();
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("/Customer/Customer.fxml").openStream());
@@ -90,6 +90,7 @@ public class LoginController implements Initializable {
             stage.setScene(scene);
             stage.setTitle("Customer Dashboard");
             stage.setResizable(false);
+            old.close();
             stage.show();
         } catch (IOException e){
             e.printStackTrace();
