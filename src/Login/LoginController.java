@@ -22,6 +22,8 @@ public class LoginController implements Initializable {
     @FXML
     private Label meetingBookerLabel;
     @FXML
+    private Label accountCreationLabel;
+    @FXML
     private Button loginButton;
     @FXML
     private Button registerButton;
@@ -110,6 +112,8 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
     }
-
+//    public void accountCreated(){
+//        accountCreationLabel.setText("Account created!");
+//    }
 }
 
