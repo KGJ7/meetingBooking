@@ -22,31 +22,22 @@ public class RegisterController {
 
     @FXML
     private Label errorLabel;
-
     @FXML
     private TextField usernameField;
-
     @FXML
     private TextField firstnameField;
-
     @FXML
     private TextField lastnameField;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private PasswordField confirmPasswordField;
-
     @FXML
     private TextField emailField;
-
     @FXML
     private Button registerButton;
-
     @FXML
     private Button cancelButton;
-
 
     public boolean verifyEmail() {
         String regex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
