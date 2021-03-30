@@ -33,6 +33,17 @@ public class LoginController implements Initializable {
     private PasswordField passwordField;
     @FXML
     private ComboBox<String> accountType;
+    public static int UserID;
+    public static String username;
+
+
+    public static int getUserID() {
+        return UserID;
+    }
+
+    public static String getUsername(){
+        return username;
+    }
 
     public void initialize(URL url, ResourceBundle rb) {
         if (this.loginModel.isConnected()) {
@@ -46,7 +57,11 @@ public class LoginController implements Initializable {
     @FXML
     public void login() {
         try {
-            if (this.loginModel.isLogin(this.usernameField.getText(), this.passwordField.getText(), accountType.getValue())) {
+            int login = this.loginModel.isLogin(this.usernameField.getText(), this.passwordField.getText(), accountType.getValue());
+            if (login >0) {
+                UserID = login;
+                Stage stage = (Stage) this.loginButton.getScene().getWindow();
+                stage.close();
                 switch (accountType.getValue()) {
                     case "Admin":
                         adminLogin();
@@ -56,15 +71,14 @@ public class LoginController implements Initializable {
                         break;
                 }
             } else {
-                credentialsLabel.setText("Invalid login!");
+                credentialsLabel.setText("Invalid log in!");
             }
         } catch (Exception ignored) {
         }
     }
 
-    public void adminLogin(){
-        try{
-            Stage old = (Stage) this.loginButton.getScene().getWindow();
+    public void adminLogin() {
+        try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("/Admin/Admin.fxml").openStream());
@@ -73,14 +87,15 @@ public class LoginController implements Initializable {
             stage.setScene(scene);
             stage.setTitle("Admin Dashboard");
             stage.setResizable(false);
-            old.close();
             stage.show();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
-    public void customerLogin(){
-        try{
+
+    public void customerLogin() {
+        try {
             Stage old = (Stage) this.loginButton.getScene().getWindow();
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
@@ -92,13 +107,14 @@ public class LoginController implements Initializable {
             stage.setResizable(false);
             old.close();
             stage.show();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void registerUser(){
-        try{
-            Stage old = (Stage)registerButton.getScene().getWindow();
+
+    public void registerUser() {
+        try {
+            Stage old = (Stage) registerButton.getScene().getWindow();
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("/Register/Register.fxml").openStream());
@@ -109,7 +125,7 @@ public class LoginController implements Initializable {
             stage.setResizable(false);
             old.close();
             stage.show();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -19,6 +19,29 @@ public class LoginModel {
         }
     }
 
+    public static String getUsername(int UserID) throws SQLException{
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM Users where ID = ?";
+        try{
+            Connection con = DBConnection.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,UserID);
+            rs = ps.executeQuery();
+            if (rs.next()){
+                return rs.getString(2);
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            ps.close();
+            rs.close();
+        }
+    }
+
     public boolean isConnected(){
         return this.connection != null;
     }
@@ -29,7 +52,7 @@ public class LoginModel {
         String sql = "";
     }
 
-    public boolean isLogin(String Username, String Password, String Account) throws SQLException {
+    public int isLogin(String Username, String Password, String Account) throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sql = "SELECT * FROM Users where Username = ? and Password = ? and Account = ?";
@@ -41,10 +64,10 @@ public class LoginModel {
 
             rs = ps.executeQuery();
             if(rs.next()){
-                return true;
-            } return false;
+                return rs.getInt(1);
+            } return -1;
         } catch(SQLException e){
-            return false;
+            return -1;
         }finally {
             ps.close();
             rs.close();
