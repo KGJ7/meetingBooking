@@ -1,5 +1,6 @@
 package RoomBooker;
 
+import Cleaner.CleanerModel;
 import DBUtil.DBConnection;
 import Login.LoginController;
 import Login.LoginModel;
@@ -130,7 +131,6 @@ public class RoomBookerController {
      */
 
     public boolean checkRefreshmentTimeValidity() throws SQLException{
-        //use this method to see if the time they've selected is legal
         if (refreshmentTimeTextField.getText().isEmpty()) {
             errorLabel.setText("");
             return true;
@@ -185,7 +185,6 @@ public class RoomBookerController {
             e.printStackTrace();
             return false;
         } finally {
-            //To close the connection
             assert ps != null;
             ps.close();
             assert rs != null;
@@ -194,7 +193,31 @@ public class RoomBookerController {
     }
 
     public boolean addRefreshment() throws SQLException{
-        String[] refreshmentArray = refreshmentsTextField.getText().split("[,]",)
+        String[] refreshmentArray = refreshmentsTextField.getText().split("[,]",0);
+        String[] refreshmentTimeArray = refreshmentTimeTextField.getText().split("[,]",0);
+        PreparedStatement ps = null;
+        try{
+            Connection con = DBConnection.getConnection();
+            String sql = "INSERT INTO Refreshments(RoomID, Date, Time, RefreshmentType) VALUES (?,?,?,?)";
+            assert con != null;
+            for (int i = 0; i < refreshmentArray.length; i++) {
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, roomNumberSpinner.getValue());
+                ps.setString(2, meetingDateDatePicker.getValue().toString());
+                ps.setString(3, refreshmentTimeArray[i]);
+                ps.setString(4,refreshmentArray[i]);
+                ps.execute();
+            }
+            errorLabel.setText("");
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            errorLabel.setText("Error in refreshment field");
+            return false;
+        } finally{
+            assert ps != null;
+            ps.close();
+        }
     }
 
 
@@ -227,11 +250,18 @@ public class RoomBookerController {
             if(checkBookingStack()){
                 if(checkForDoubleMeeting()){
                     if(checkRefreshmentTimeValidity()){
-
+                        getRoomCleanStatus();
                     }
                 }
             }
         }
+    }
+
+    public boolean getRoomCleanStatus() throws SQLException {
+        String beginRoomCleaningTime= endingTimeComboBox.getValue().toString();
+        CleanerModel cleaner = new CleanerModel(beginRoomCleaningTime, meetingDateDatePicker.getValue());
+        cleaner.getOccupiedCleanerTimes();
+
     }
 
     private boolean checkForDoubleMeeting() throws SQLException{
