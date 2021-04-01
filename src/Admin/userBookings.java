@@ -9,14 +9,14 @@ public class userBookings {
     private int roomID;
     private int userID;
     private String username;
-    private LocalTime startingTime;
-    private LocalTime endingTime;
+    private String startingTime;
+    private String endingTime;
     private LocalDate Date;
     private String resources;
     private String refreshments;
     private String refreshmentsTime;
 
-    public userBookings(int roomID, int userID, String username, LocalTime startingTime, LocalTime endingTime, LocalDate Date, String resources, String refreshments, String refreshmentsTime) {
+    public userBookings(int roomID, int userID, String username, String startingTime, String endingTime, LocalDate Date, String resources, String refreshments, String refreshmentsTime) {
         this.roomID = roomID;
         this.userID = userID;
         this.username = username;
@@ -25,27 +25,6 @@ public class userBookings {
         this.Date = Date;
         this.resources = resources;
         this.refreshments = refreshments;
-        this.refreshmentsTime = refreshmentsTime;
-    }
-
-
-    public int getDuration() {
-        return (int) Duration.between(this.getStartTime(), this.getEndTime()).toMinutes();
-    }
-
-    public String getRefreshments() {
-        return refreshments;
-    }
-
-    public void setRefreshments(String refreshments) {
-        this.refreshments = refreshments;
-    }
-
-    public String getRefreshmentsTime() {
-        return refreshmentsTime;
-    }
-
-    public void setRefreshmentsTime(String refreshmentsTime) {
         this.refreshmentsTime = refreshmentsTime;
     }
 
@@ -73,28 +52,28 @@ public class userBookings {
         this.username = username;
     }
 
-    public LocalTime getStartTime() {
+    public String getStartingTime() {
         return startingTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
-        this.startingTime = startTime;
+    public void setStartingTime(String startingTime) {
+        this.startingTime = startingTime;
     }
 
-    public LocalTime getEndTime() {
+    public String getEndingTime() {
         return endingTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
-        this.endingTime = endTime;
+    public void setEndingTime(String endingTime) {
+        this.endingTime = endingTime;
     }
 
     public LocalDate getDate() {
         return Date;
     }
 
-    public void setDate(LocalDate startDate) {
-        this.Date = startDate;
+    public void setDate(LocalDate date) {
+        Date = date;
     }
 
     public String getResources() {
@@ -105,4 +84,19 @@ public class userBookings {
         this.resources = resources;
     }
 
+    public String getRefreshments() {
+        return refreshments;
+    }
+
+    public void setRefreshments(String refreshments) {
+        this.refreshments = refreshments;
+    }
+
+    public String getRefreshmentsTime() {
+        return refreshmentsTime;
+    }
+
+    public void setRefreshmentsTime(String refreshmentsTime) {
+        this.refreshmentsTime = refreshmentsTime;
+    }
 }

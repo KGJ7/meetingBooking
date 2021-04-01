@@ -60,7 +60,7 @@ public class CustomerController  {
             ps.setString(1,String.valueOf(LoginController.currentUser.getUserID()));
             rs = ps.executeQuery();
             while (rs.next()){
-                userBookings userBookingTemp = new userBookings(rs.getInt(1),rs.getInt(2),rs.getString(3),LocalTime.parse(rs.getString(4)),LocalTime.parse(rs.getString(5)),LocalDate.parse(rs.getString(6)),rs.getString(7),rs.getString(8),rs.getString(9));
+                userBookings userBookingTemp = new userBookings(rs.getInt(1),rs.getInt(2),rs.getString(3),(rs.getString(4)),(rs.getString(5)),LocalDate.parse(rs.getString(6)),rs.getString(7),rs.getString(8),rs.getString(9));
                 this.data.add(userBookingTemp);
             }
         } catch (SQLException e){

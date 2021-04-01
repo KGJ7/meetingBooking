@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,14 +14,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ResourceBundle;
 
 public class AdminController {
 
@@ -35,9 +32,9 @@ public class AdminController {
     @FXML
     private Button backButton;
     @FXML
-    private TableView<userData> currentBookingTable;
+    private TableView<userBookings> currentBookingTable;
     @FXML
-    private TableView<userBookings> currentUserTable;
+    private TableView<userData> currentUserTable;
     @FXML
     private TableColumn<userData, String> IDColumn;
     @FXML
@@ -87,15 +84,15 @@ public class AdminController {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        this.IDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        this.usernameColumn.setCellValueFactory(new PropertyValueFactory<>("Username"));
-        this.firstnameColumn.setCellValueFactory(new PropertyValueFactory<>("Firstname"));
-        this.lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("Lastname"));
-        this.passwordColumn.setCellValueFactory(new PropertyValueFactory<>("Password"));
-        this.emailColumn.setCellValueFactory(new PropertyValueFactory<>("Email"));
-        this.accountTypeColumn.setCellValueFactory(new PropertyValueFactory<>("AccountType"));
-        currentBookingTable.setItems(null);
-        currentBookingTable.setItems(this.data);
+        this.IDColumn.setCellValueFactory(new PropertyValueFactory<>("userID"));
+        this.usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+        this.firstnameColumn.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+        this.lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        this.passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
+        this.emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        this.accountTypeColumn.setCellValueFactory(new PropertyValueFactory<>("account"));
+        currentUserTable.setItems(null);
+        currentUserTable.setItems(this.data);
     }
 
     private void initializeBookingTable() {
@@ -106,7 +103,7 @@ public class AdminController {
             assert con != null;
             ResultSet rs = con.createStatement().executeQuery(sql);
             while (rs.next()) {
-                this.bookings.add(new userBookings(rs.getInt(1),rs.getInt(2),rs.getString(3),LocalTime.parse(rs.getString(4)),LocalTime.parse(rs.getString(5)),LocalDate.parse(rs.getString(6)),rs.getString(7),rs.getString(8),rs.getString(9)));
+                this.bookings.add(new userBookings(rs.getInt(1),rs.getInt(2),rs.getString(3),(rs.getString(4)),(rs.getString(5)),LocalDate.parse(rs.getString(6)),rs.getString(7),rs.getString(8),rs.getString(9)));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -121,7 +118,7 @@ public class AdminController {
         this.refreshmentsColumn.setCellValueFactory(new PropertyValueFactory<>("refreshments"));
         this.refreshmentTimeColumn.setCellValueFactory(new PropertyValueFactory<>("refreshmentsTime"));
         currentBookingTable.setItems(null);
-        currentBookingTable.setItems(this.data);
+        currentBookingTable.setItems(this.bookings);
     }
 
     @FXML

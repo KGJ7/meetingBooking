@@ -36,7 +36,7 @@ public class CleanerModel {
             ps.setInt(1,2);
             ps.setString(2, String.valueOf(date));
             while(rs.next()){
-                occupiedBookings.add(new userBookings(rs.getInt(1),rs.getInt(2),rs.getString(3),LocalTime.parse(rs.getString(4)),LocalTime.parse(rs.getString(5)),LocalDate.parse(rs.getString(6)),rs.getString(7),rs.getString(8),rs.getString(9)));
+                occupiedBookings.add(new userBookings(rs.getInt(1),rs.getInt(2),rs.getString(3),(rs.getString(4)),(rs.getString(5)),LocalDate.parse(rs.getString(6)),rs.getString(7),rs.getString(8),rs.getString(9)));
             }
         } catch(Exception e){
             System.out.println("Error: " + e);
@@ -51,7 +51,7 @@ public class CleanerModel {
 
     public boolean isBookingOccupied(){
         for(userBookings i:occupiedBookings){
-            boolean temp = startTime.equals(i.getStartTime());
+            boolean temp = startTime.equals(i.getStartingTime());
             if(temp){
                 return true;
             }
@@ -93,8 +93,8 @@ public class CleanerModel {
                 return getNextFreeSpot(date.toString());
             }else {
                 for (userBookings i : userBookingsArrayList) {
-                    if (i.getStartTime().isAfter(startTime)) {
-                        return i.getStartTime();
+                    if (LocalTime.parse(i.getStartingTime()).isAfter(startTime)) {
+                        return LocalTime.parse(i.getStartingTime());
                     }
                 }
             }
@@ -116,10 +116,10 @@ public class CleanerModel {
             ps.setString(2, date);
             rs = ps.executeQuery();
             while (rs.next()) {
-                ub.add(new userBookings(rs.getInt(1),rs.getInt(2),rs.getString(3),LocalTime.parse(rs.getString(4)),LocalTime.parse(rs.getString(5)),LocalDate.parse(rs.getString(6)),rs.getString(7),rs.getString(8),rs.getString(9)));
+                ub.add(new userBookings(rs.getInt(1),rs.getInt(2),rs.getString(3),(rs.getString(4)),(rs.getString(5)),LocalDate.parse(rs.getString(6)),rs.getString(7),rs.getString(8),rs.getString(9)));
             }
             for(userBookings x: ub){
-                return x.getStartTime().plus(30, ChronoUnit.MINUTES);
+                return (LocalTime.parse(x.getStartingTime()).plus(30, ChronoUnit.MINUTES));
             }
         }catch(Exception e){
             System.out.println("Error: " + e);
