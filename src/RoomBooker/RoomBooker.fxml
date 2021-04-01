@@ -5,7 +5,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="RoomBooker.RoomBookerController">
     <children>
-        <Button fx:id="bookRoomButton" layoutX="1146.0" layoutY="646.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Book room!" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+        <Button fx:id="bookRoomButton" layoutX="1146.0" layoutY="646.0" mnemonicParsing="false" onAction="#bookRoomConfirm" prefHeight="30.0" prefWidth="120.0" text="Book room!" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
         <Label layoutX="198.0" layoutY="14.0" text="Please choose your preferred meeting time here:" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="12.0" />
         <Label layoutX="165.0" layoutY="36.0" text="to" AnchorPane.leftAnchor="169.0" AnchorPane.topAnchor="35.0" />
         <TextField fx:id="refreshmentRequestTextField" layoutX="14.0" layoutY="135.0" prefHeight="25.0" prefWidth="320.0" promptText="What refreshments would you like?" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="135.0" />
@@ -20,8 +20,9 @@
         <Label layoutX="15.0" layoutY="207.0" text="Available meeting times:" AnchorPane.topAnchor="205.0" />
       <ComboBox fx:id="startTimeComboBox" layoutX="15.0" layoutY="31.0" prefHeight="25.0" prefWidth="150.0" promptText="Starting time" AnchorPane.leftAnchor="15.0" />
       <ComboBox fx:id="endingTimeComboBox" layoutX="190.0" layoutY="31.0" prefWidth="150.0" promptText="Ending time" AnchorPane.leftAnchor="184.0" />
-      <Label fx:id="errorLabel" layoutX="265.0" layoutY="338.0" prefHeight="17.0" prefWidth="120.0" />
+      <Label fx:id="errorLabel" layoutX="174.0" layoutY="338.0" prefHeight="17.0" prefWidth="211.0" />
       <Spinner fx:id="roomNumberSpinner" layoutX="16.0" layoutY="102.0" AnchorPane.leftAnchor="15.0" />
       <TextField fx:id="resourcesTextField" layoutX="175.0" layoutY="102.0" prefHeight="25.0" prefWidth="160.0" promptText="Resources?" />
+      <Button fx:id="cancelButton" layoutX="174.0" layoutY="353.0" mnemonicParsing="false" onAction="#returnToCustomerUI" prefHeight="30.0" prefWidth="52.0" text="Cancel" AnchorPane.bottomAnchor="15.0" />
     </children>
 </AnchorPane>

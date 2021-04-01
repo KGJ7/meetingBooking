@@ -5,13 +5,16 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Customer.CustomerController">
    <children>
-      <Button layoutX="1146.0" layoutY="646.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="120.0" text="Book a room!" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
-      <Label layoutX="198.0" layoutY="14.0" text="Please type your preferred meeting time here (in 24 hour time):" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
-      <TextField layoutX="200.0" layoutY="32.0" promptText="Earliest time" AnchorPane.leftAnchor="15.0" />
-      <Label layoutX="356.0" layoutY="36.0" text="to" AnchorPane.leftAnchor="170.0" />
-      <TextField layoutX="386.0" layoutY="32.0" promptText="Latest time" AnchorPane.leftAnchor="185.0" />
-      <CheckBox layoutX="200.0" layoutY="74.0" mnemonicParsing="false" text="Disabled access?" AnchorPane.leftAnchor="15.0" />
-      <ComboBox layoutX="200.0" layoutY="102.0" prefWidth="150.0" promptText="Accomodation size:" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="100.0" />
-      <Button fx:id="openRoomBookerButton" layoutX="200.0" layoutY="137.0" mnemonicParsing="false" onAction="#openRoomBooker" text="Button" AnchorPane.leftAnchor="15.0" />
+      <Button fx:id="openRoomBookerButton" layoutX="1146.0" layoutY="646.0" mnemonicParsing="false" onAction="#openRoomBooker" prefHeight="60.0" prefWidth="120.0" text="Book a room!" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+      <Label layoutX="198.0" layoutY="14.0" text="Welcome!" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
+      <Label layoutX="15.0" layoutY="32.0" text="Your current bookings:" AnchorPane.leftAnchor="15.0" />
+      <TableView layoutX="15.0" layoutY="49.0" prefHeight="200.0" prefWidth="370.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+        <columns>
+          <TableColumn fx:id="roomIDColumn" prefWidth="75.0" text="Room ID" />
+          <TableColumn fx:id="dateColumn" prefWidth="98.0" text="Date" />
+            <TableColumn fx:id="startingTimeColumn" prefWidth="86.0" text="Starting time" />
+            <TableColumn fx:id="endingTimeColumn" prefWidth="110.0" text="Ending time" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

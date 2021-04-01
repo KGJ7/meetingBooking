@@ -7,10 +7,16 @@ import Login.LoginModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import org.sqlite.core.DB;
 
 import javax.xml.soap.Text;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +34,7 @@ public class RoomBookerController {
     private ComboBox endingTimeComboBox;
 
     @FXML
-    private TextField refreshmentsTextField;
+    private TextField refreshmentRequestTextField;
 
     @FXML
     private TextField refreshmentTimeTextField;
@@ -45,6 +51,9 @@ public class RoomBookerController {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private Button cancelButton;
+
 
 
     @FXML
@@ -55,8 +64,9 @@ public class RoomBookerController {
     public void initialize() {
         setDateBounds();
         initializeSpinner();
-
+        initComboBoxes();
     }
+
 
 
     public void setDateBounds() {
@@ -77,13 +87,16 @@ public class RoomBookerController {
     }
 
     public boolean verifyFieldsNotNull() {
-        if (startTimeComboBox.getValue().equals(null) || (endingTimeComboBox.getValue().equals(null))) {
-            errorLabel.setText("Please select time");
+        boolean startTimeEmpty = startTimeComboBox.getValue() == null;
+        boolean endTimeEmpty = endingTimeComboBox.getValue() == null;
+        boolean datePickerEmpty = meetingDateDatePicker.getValue() == null;
+        if (startTimeEmpty || endTimeEmpty) {
+            errorLabel.setText("Please select a time");
             return false;
-        } else if (refreshmentsTextField.getText() != null && refreshmentTimeTextField.getText().isEmpty()) {
+        } else if (!refreshmentRequestTextField.getText().isEmpty() && refreshmentTimeTextField.getText().isEmpty()) {
             errorLabel.setText("Please enter both refreshment fields");
             return false;
-        } else if(meetingDateDatePicker.getValue().equals(null)) {
+        } else if(datePickerEmpty) {
             errorLabel.setText("Please enter a date");
         }else{
             return true;
@@ -91,7 +104,7 @@ public class RoomBookerController {
         return true;
     }
 
-    public void timeOptions() {
+    public void initComboBoxes() {
         ObservableList<String> startBoxTimeOptions = FXCollections.observableArrayList("08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30");
         ObservableList<String> endingBoxTimeOptions = FXCollections.observableArrayList("08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00");
         startTimeComboBox.getItems().addAll(startBoxTimeOptions);
@@ -193,7 +206,7 @@ public class RoomBookerController {
     }
 
     public boolean addRefreshment() throws SQLException{
-        String[] refreshmentArray = refreshmentsTextField.getText().split("[,]",0);
+        String[] refreshmentArray = refreshmentRequestTextField.getText().split("[,]",0);
         String[] refreshmentTimeArray = refreshmentTimeTextField.getText().split("[,]",0);
         PreparedStatement ps = null;
         try{
@@ -240,9 +253,9 @@ public class RoomBookerController {
         return true;
     }
 
-    public void assignToDB() {
 
-    }
+
+
 
     @FXML
     public void bookRoomConfirm() throws SQLException {
@@ -250,10 +263,40 @@ public class RoomBookerController {
             if(checkBookingStack()){
                 if(checkForDoubleMeeting()){
                     if(checkRefreshmentTimeValidity()){
-                        getRoomCleanStatus();
+                        if(getRoomCleanStatus()) {
+                            if (addBooking()) {
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Success!");
+                                alert.setHeaderText(null);
+                                alert.setContentText("Booking successfully added to DB!");
+                                alert.showAndWait().ifPresent((btnType) -> {
+                                    if (btnType == ButtonType.OK) {
+                                        returnToCustomerUI();
+                                    }
+                                });
+                            }
+                        }
                     }
                 }
             }
+        }
+    }
+    @FXML
+    public void returnToCustomerUI(){
+        try{
+            Stage old = (Stage)cancelButton.getScene().getWindow();
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = loader.load(getClass().getResource("/Customer/Customer.fxml").openStream());
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/Stylesheets/Customer.css").toExternalForm());
+            stage.setScene(scene);
+            stage.setTitle("Customer Dashboard");
+            stage.setResizable(false);
+            old.close();
+            stage.show();
+        } catch (IOException e){
+            e.printStackTrace();
         }
     }
 
@@ -261,7 +304,18 @@ public class RoomBookerController {
         String beginRoomCleaningTime= endingTimeComboBox.getValue().toString();
         CleanerModel cleaner = new CleanerModel(beginRoomCleaningTime, meetingDateDatePicker.getValue());
         cleaner.getOccupiedCleanerTimes();
-
+        if(cleaner.isBookingOccupied()) {
+            int roomID = roomNumberSpinner.getValue();
+            String tempDate = meetingDateDatePicker.getValue().toString();
+            if (cleaner.getNextBooking(tempDate) != null) {
+                cleaner.addCleanerSlot(roomID, (cleaner.getNextBooking(tempDate)), meetingDateDatePicker.getValue());
+                return true;
+            } else {
+                return false;
+            }
+        }else{
+            return cleaner.addCleanerSlot(roomNumberSpinner.getValue(), LocalTime.parse(endingTimeComboBox.getValue().toString()),meetingDateDatePicker.getValue());
+        }
     }
 
     private boolean checkForDoubleMeeting() throws SQLException{
@@ -312,9 +366,9 @@ public class RoomBookerController {
         return false;
     }
 
-    public void addBooking() throws SQLException {
+    public boolean addBooking() throws SQLException {
         PreparedStatement ps = null;
-        String sql = "INSERT INTO Bookings(RoomID, UserID, Username, StartingTime, EndingTime, Resources, Refreshments, RefreshmentTime) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Bookings(RoomID, UserID, Username, StartingTime, EndingTime, Resources, Refreshment, RefreshmentTime) VALUES (?,?,?,?,?,?,?,?)";
 
         try {
             Connection con = DBConnection.getConnection();
@@ -325,11 +379,15 @@ public class RoomBookerController {
             ps.setString(4, startTimeComboBox.getValue().toString());
             ps.setString(5, endingTimeComboBox.getValue().toString());
             ps.setString(6, resourcesTextField.getText());
-            ps.setString(7, refreshmentsTextField.getText());
+            ps.setString(7, refreshmentRequestTextField.getText());
             ps.setString(8, refreshmentTimeTextField.getText());
+            errorLabel.setText("");
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         } finally {
+            assert ps !=null;
             ps.close();
         }
     }

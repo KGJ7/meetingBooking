@@ -35,6 +35,7 @@ public class LoginController implements Initializable {
     private ComboBox<String> accountType;
     public static int UserID;
     public static String username;
+    public static User currentUser;
 
 
     public static int getUserID() {

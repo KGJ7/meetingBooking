@@ -26,10 +26,11 @@ public class userBookings {
         this.resources = resources;
     }
 
-    public userBookings(int roomID, int userID, LocalTime startingTime, LocalDate Date) {
+    public userBookings(int roomID, int userID, LocalTime startingTime, LocalTime endingTime, LocalDate Date) {
         this.roomID = roomID;
         this.userID = userID;
         this.startingTime = startingTime;
+        this.endingTime = endingTime;
         this.Date = Date;
     }
 
@@ -44,6 +45,7 @@ public class userBookings {
         this.refreshments = refreshments;
         this.refreshmentsTime = refreshmentsTime;
     }
+
 
     public int getDuration() {
         return (int) Duration.between(this.getStartTime(), this.getEndTime()).toMinutes();
