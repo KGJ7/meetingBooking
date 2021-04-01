@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,15 +16,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ResourceBundle;
 
 
-public class CustomerController {
+public class CustomerController  {
 
     private ObservableList<userBookings> data;
     @FXML
@@ -34,9 +37,15 @@ public class CustomerController {
     private TableColumn<userBookings, String> endingTimeColumn;
     @FXML
     private TableColumn<userBookings, String> dateColumn;
-
     @FXML
     private Button openRoomBookerButton;
+    @FXML
+    private Button logOutButton;
+
+
+//    public void initialize() {
+//        displayCurrentBookings();
+//    }
 
     @FXML
     private void displayCurrentBookings(){
@@ -51,7 +60,7 @@ public class CustomerController {
             ps.setString(1,String.valueOf(LoginController.currentUser.getUserID()));
             rs = ps.executeQuery();
             while (rs.next()){
-                userBookings userBookingTemp = new userBookings(rs.getInt(1), rs.getInt(2), LocalTime.parse(rs.getString(3)), LocalTime.parse(rs.getString(4)), LocalDate.parse(rs.getString(5)));
+                userBookings userBookingTemp = new userBookings(rs.getInt(1),rs.getInt(2),rs.getString(3),LocalTime.parse(rs.getString(4)),LocalTime.parse(rs.getString(5)),LocalDate.parse(rs.getString(6)),rs.getString(7),rs.getString(8),rs.getString(9));
                 this.data.add(userBookingTemp);
             }
         } catch (SQLException e){
@@ -62,6 +71,25 @@ public class CustomerController {
         this.startingTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         this.endingTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         this.dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+    }
+
+    @FXML
+    public void backToLogin(){
+        try {
+            Stage old = (Stage) this.logOutButton.getScene().getWindow();
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = loader.load(getClass().getResource("/Login/LoginFXML.fxml").openStream());
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/Stylesheets/Login.css").toExternalForm());
+            stage.setScene(scene);
+            stage.setTitle("Room booker");
+            stage.setResizable(false);
+            old.close();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @FXML
     public void openRoomBooker() {
@@ -82,4 +110,5 @@ public class CustomerController {
         }
 
     }
+
 }

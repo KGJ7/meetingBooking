@@ -1,8 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Admin.AdminController">
-
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Admin.AdminController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Welcome!" AnchorPane.leftAnchor="15.0" />
+      <TableView fx:id="currentUserTable" layoutX="14.0" layoutY="55.0" prefHeight="200.0" prefWidth="800.0" AnchorPane.leftAnchor="15.0">
+        <columns>
+          <TableColumn fx:id="IDColumn" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="usernameColumn" prefWidth="75.0" text="Username" />
+            <TableColumn fx:id="firstnameColumn" prefWidth="125.0" text="First name" />
+            <TableColumn fx:id="lastnameColumn" prefWidth="121.0" text="Last name" />
+            <TableColumn fx:id="passwordColumn" prefWidth="129.0" text="Password" />
+            <TableColumn fx:id="emailColumn" prefWidth="129.0" text="Email" />
+            <TableColumn fx:id="accountTypeColumn" prefWidth="145.0" text="Account type" />
+        </columns>
+      </TableView>
+      <Label layoutX="14.0" layoutY="31.0" text="Current User database:" AnchorPane.leftAnchor="15.0" />
+      <Label layoutX="14.0" layoutY="269.0" text="Current bookings:" AnchorPane.leftAnchor="15.0" />
+      <TableView fx:id="currentBookingTable" layoutX="14.0" layoutY="286.0" prefHeight="200.0" prefWidth="800.0" AnchorPane.leftAnchor="15.0">
+        <columns>
+          <TableColumn fx:id="RoomIDColumn" prefWidth="75.0" text="RoomID" />
+          <TableColumn fx:id="UserIDColumn" prefWidth="75.0" text="UserID" />
+            <TableColumn fx:id="UsernameColumn" prefWidth="87.0" text="Username" />
+            <TableColumn fx:id="startingTimeColumn" prefWidth="92.0" text="Starting Time" />
+            <TableColumn fx:id="endingTimeColumn" prefWidth="77.0" text="Ending Time" />
+            <TableColumn fx:id="dateColumn" prefWidth="66.0" text="Date" />
+            <TableColumn fx:id="resourcesColumn" prefWidth="103.0" text="Resources" />
+            <TableColumn fx:id="refreshmentsColumn" prefWidth="90.0" text="Refreshments" />
+            <TableColumn fx:id="refreshmentTimeColumn" prefWidth="134.0" text="Refreshment time" />
+        </columns>
+      </TableView>
+      <Button fx:id="openCatererButton" layoutX="10.0" layoutY="681.0" mnemonicParsing="false" onAction="#openCaterer" text="Caterer dashboard" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="150.0" />
+      <Button fx:id="openCleanerButton" layoutX="136.0" layoutY="681.0" mnemonicParsing="false" onAction="#openCleaner" text="Cleaner dashboard" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="275.0" />
+      <Button fx:id="addAdmin" layoutX="258.0" layoutY="681.0" mnemonicParsing="false" onAction="#addNewAdmin" text="Add an admin" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="400.0" />
+      <Button fx:id="backButton" layoutX="16.0" layoutY="681.0" mnemonicParsing="false" onAction="#returnToLogin" prefHeight="25.0" prefWidth="121.0" text="Back" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
+   </children>
 </AnchorPane>

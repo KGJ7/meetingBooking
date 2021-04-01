@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Caterer.CatererController">
+   <children>
+      <Button fx:id="backButton" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#returnToAdmin" text="Back" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
+      <Label layoutX="14.0" layoutY="14.0" text="Caterer's dashboard:" />
+      <TableView fx:id="CatererTable" layoutX="14.0" layoutY="31.0" prefHeight="325.0" prefWidth="480.0">
+        <columns>
+          <TableColumn fx:id="roomIDColumn" prefWidth="111.0" text="Room ID" />
+          <TableColumn fx:id="RefreshmentTimeColumn" prefWidth="159.0" text="Refreshment time" />
+            <TableColumn fx:id="refreshmentColumn" prefWidth="209.0" text="Refreshment" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

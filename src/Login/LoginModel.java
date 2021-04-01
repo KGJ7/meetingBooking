@@ -52,7 +52,7 @@ public class LoginModel {
         String sql = "";
     }
 
-    public int isLogin(String Username, String Password, String Account) throws SQLException {
+    public boolean isLogin(String Username, String Password, String Account) throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sql = "SELECT * FROM Users where Username = ? and Password = ? and Account = ?";
@@ -64,10 +64,10 @@ public class LoginModel {
 
             rs = ps.executeQuery();
             if(rs.next()){
-                return rs.getInt(1);
-            } return -1;
+                return true;
+            } return false;
         } catch(SQLException e){
-            return -1;
+            return false;
         }finally {
             ps.close();
             rs.close();

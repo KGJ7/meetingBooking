@@ -16,24 +16,6 @@ public class userBookings {
     private String refreshments;
     private String refreshmentsTime;
 
-    public userBookings(int roomID, int userID, String username, LocalTime startingTime, LocalTime endingTime, LocalDate Date, String resources) {
-        this.roomID = roomID;
-        this.userID = userID;
-        this.username = username;
-        this.startingTime = startingTime;
-        this.endingTime = endingTime;
-        this.Date = Date;
-        this.resources = resources;
-    }
-
-    public userBookings(int roomID, int userID, LocalTime startingTime, LocalTime endingTime, LocalDate Date) {
-        this.roomID = roomID;
-        this.userID = userID;
-        this.startingTime = startingTime;
-        this.endingTime = endingTime;
-        this.Date = Date;
-    }
-
     public userBookings(int roomID, int userID, String username, LocalTime startingTime, LocalTime endingTime, LocalDate Date, String resources, String refreshments, String refreshmentsTime) {
         this.roomID = roomID;
         this.userID = userID;

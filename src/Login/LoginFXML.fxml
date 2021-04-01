@@ -14,8 +14,8 @@
       <ImageView fitHeight="368.0" fitWidth="300.0" layoutX="286.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="loginButton" layoutX="62.0" layoutY="230.0" mnemonicParsing="false" onAction="#login" prefHeight="49.0" prefWidth="49.0" text="Log in" />
       <Button fx:id="registerButton" layoutX="56.0" layoutY="331.0" mnemonicParsing="false" onAction="#registerUser" text="Register" />
-      <TextField fx:id="usernameField" layoutX="12.0" layoutY="111.0" promptText="Username" text="Glec" />
-      <PasswordField fx:id="passwordField" layoutX="12.0" layoutY="143.0" promptText="Password" text="Glec" />
+      <TextField fx:id="usernameField" layoutX="12.0" layoutY="111.0" promptText="Username" text="owner" />
+      <PasswordField fx:id="passwordField" layoutX="12.0" layoutY="143.0" promptText="Password" text="hello" />
       <ComboBox fx:id="accountType" layoutX="11.0" layoutY="175.0" prefWidth="150.0" promptText="Account type" />
       <Text layoutX="68.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign in" />
       <Text layoutX="54.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No account?" />

@@ -36,7 +36,7 @@ public class CleanerModel {
             ps.setInt(1,2);
             ps.setString(2, String.valueOf(date));
             while(rs.next()){
-                occupiedBookings.add(new userBookings(rs.getInt(1),rs.getInt(2), LocalTime.parse(rs.getString(3)),LocalTime.parse(rs.getString(4)),LocalDate.parse(rs.getString(5))));
+                occupiedBookings.add(new userBookings(rs.getInt(1),rs.getInt(2),rs.getString(3),LocalTime.parse(rs.getString(4)),LocalTime.parse(rs.getString(5)),LocalDate.parse(rs.getString(6)),rs.getString(7),rs.getString(8),rs.getString(9)));
             }
         } catch(Exception e){
             System.out.println("Error: " + e);
@@ -116,14 +116,11 @@ public class CleanerModel {
             ps.setString(2, date);
             rs = ps.executeQuery();
             while (rs.next()) {
-                ub.add(new userBookings(rs.getInt(1), rs.getInt(2), LocalTime.parse(rs.getString(3)), LocalTime.parse(rs.getString(4)), LocalDate.parse(rs.getString(5))));
+                ub.add(new userBookings(rs.getInt(1),rs.getInt(2),rs.getString(3),LocalTime.parse(rs.getString(4)),LocalTime.parse(rs.getString(5)),LocalDate.parse(rs.getString(6)),rs.getString(7),rs.getString(8),rs.getString(9)));
             }
             for(userBookings x: ub){
                 return x.getStartTime().plus(30, ChronoUnit.MINUTES);
             }
-
-
-
         }catch(Exception e){
             System.out.println("Error: " + e);
         }

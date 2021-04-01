@@ -1,4 +1,4 @@
-package Register;
+package Admin;
 
 import DBUtil.DBConnection;
 import Login.LoginController;
@@ -18,7 +18,7 @@ import java.sql.PreparedStatement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegisterController {
+public class newAdminController {
 
     @FXML
     private Label errorLabel;
@@ -74,7 +74,7 @@ public class RegisterController {
             ps.setString(3, lastnameField.getText());
             ps.setString(4, passwordField.getText());
             ps.setString(5, emailField.getText());
-            ps.setString(6, "Customer");
+            ps.setString(6, "Admin");
 
             ps.execute();
             con.close();
@@ -101,14 +101,14 @@ public class RegisterController {
     }
 
     @FXML
-    public void goBackToLogin() {
+    public void goBackToAdmin() {
         try {
             Stage old = (Stage) this.registerButton.getScene().getWindow();
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            Parent root = loader.load(getClass().getResource("/Login/LoginFXML.fxml").openStream());
+            Parent root = loader.load(getClass().getResource("/Admin/AdminFXML.fxml").openStream());
             Scene scene = new Scene(root, 600, 400);
-            scene.getStylesheets().add(getClass().getResource("/Stylesheets/Login.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/Stylesheets/Admin.css").toExternalForm());
             stage.setScene(scene);
             stage.setTitle("Login");
             stage.setResizable(false);
@@ -121,12 +121,12 @@ public class RegisterController {
 
 
     @FXML
-    public void registerUser() {
+    public void registerAdmin() {
         if (fieldsNotNull()) {
             if (isPasswordMatching()) {
                 if (verifyEmail()) {
                     if (addAccount()) {
-                        goBackToLogin();
+                        goBackToAdmin();
                     }
                 }
             }

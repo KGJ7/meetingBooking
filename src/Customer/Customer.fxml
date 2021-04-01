@@ -8,7 +8,7 @@
       <Button fx:id="openRoomBookerButton" layoutX="1146.0" layoutY="646.0" mnemonicParsing="false" onAction="#openRoomBooker" prefHeight="60.0" prefWidth="120.0" text="Book a room!" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
       <Label layoutX="198.0" layoutY="14.0" text="Welcome!" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
       <Label layoutX="15.0" layoutY="32.0" text="Your current bookings:" AnchorPane.leftAnchor="15.0" />
-      <TableView layoutX="15.0" layoutY="49.0" prefHeight="200.0" prefWidth="370.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+      <TableView layoutX="15.0" layoutY="49.0" onSort="#displayCurrentBookings" prefHeight="200.0" prefWidth="370.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
         <columns>
           <TableColumn fx:id="roomIDColumn" prefWidth="75.0" text="Room ID" />
           <TableColumn fx:id="dateColumn" prefWidth="98.0" text="Date" />
@@ -16,5 +16,6 @@
             <TableColumn fx:id="endingTimeColumn" prefWidth="110.0" text="Ending time" />
         </columns>
       </TableView>
+      <Button fx:id="logOutButton" layoutX="16.0" layoutY="361.0" mnemonicParsing="false" onAction="#backToLogin" text="Log out" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
    </children>
 </AnchorPane>
